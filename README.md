@@ -3,7 +3,7 @@
 
 #Add jars at ./jar .
 
-#Use CrawlerGUIjava and ServerGUI.java to start.
+#Use CrawlerGUI.java and ServerGUI.java to start.
 
 #Change mysql password of root to "toor".
 
