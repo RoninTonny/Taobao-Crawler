@@ -7,6 +7,8 @@
 
 #Change mysql password of root to "toor".
 
+#Redis-Server for Windows needed.
+
 #DateBase Create:
 -------------------------
 
