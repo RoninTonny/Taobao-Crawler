@@ -1,11 +1,14 @@
 #Replace **website.xml file path in line 38-56 , UrlCrawlerThreadTest.java.
 #Replace **getter.xml file path in line 76 , UrlReceive.java.
 
-#add jars at ./jar .
+#Add jars at ./jar .
+
+#Use CrawlerGUIjava and ServerGUI.java to start.
 
 #Change mysql password of root to "toor".
 
 #DateBase Create:
+-------------------------
 
 CREATE DATABASE `zr` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
@@ -25,3 +28,5 @@ CREATE TABLE `attributes` (
   `Source` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-------------------------
