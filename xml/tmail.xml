@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<first-page>www.tmall.com</first-page>
+	<search-page ignore = "" type = "urls">
+		<front-url>https://list.tmall.com/search_product.htm</front-url>
+		<type>
+			<keyword>product</keyword>
+			<second-keyword>data-id</second-keyword>
+			<method>html-class</method>
+		</type>
+		<search-sort>
+			<sort-name>sort</sort-name>
+			<sort>d</sort>
+		</search-sort>
+		<increate-name>s</increate-name>
+		<page-start>0</page-start>
+		<page-increate>60</page-increate>
+		<search-name>q</search-name>
+		<encode>utf-8</encode>
+		<encode-name></encode-name>
+	</search-page>
+	<info-page>
+		<front-url>https://detail.tmall.com/item.htm</front-url>
+		<id-name>id</id-name>
+		<back-url></back-url>
+	</info-page>
+</page>
+<!--ignore : "any string" -->
+<!-- type : {"ids", "urls"} -->
+<!-- keyword : the string that can identify ids/urls -->
+<!-- second-keyword : the string that can identify ids/urls if just use one keyword is fail-->
+<!-- method : {"html-class","html-id","html-name","html-title" "text-array", "text-list"} -->

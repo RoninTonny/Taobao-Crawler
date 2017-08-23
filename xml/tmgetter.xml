@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<getter>
+	<name type="html-class">
+		<first-keyword>tb-detail-hd</first-keyword>
+		<second-keyword></second-keyword>
+	</name>
+	<shop type="html-class">
+		<first-keyword>slogo-shopname</first-keyword>
+		<second-keyword></second-keyword>
+	</shop>
+	<price type="js">
+		<referrer>first-page</referrer>
+		<first-keyword>\"postageFree\":false,\"price\":\"</first-keyword>
+		<second-keyword>\",\"promType\":</second-keyword>
+		<href id-name="itemId">https://mdskip.taobao.com/core/initItemDetail.htm</href>
+		<offset>29</offset>
+	</price>
+	<count type="js">
+		<referrer>first-page</referrer>
+		<first-keyword>\"sellCount\":</first-keyword>
+		<second-keyword>,\"success\":true},\"servicePromise\"</second-keyword>
+		<href id-name="itemId">https://mdskip.taobao.com/core/initItemDetail.htm</href>
+		<offset>12</offset>
+	</count>
+	<good type="">
+		<referrer></referrer>
+		<first-keyword></first-keyword>
+		<second-keyword></second-keyword>
+		<href id-name=""></href>
+		<offset></offset>
+	</good>
+	<normal type="">
+		<referrer></referrer>
+		<first-keyword></first-keyword>
+		<second-keyword></second-keyword>
+		<href id-name=""></href>
+		<offset></offset>
+	</normal>
+	<bad type="">
+		<referrer></referrer>
+		<first-keyword></first-keyword>
+		<second-keyword></second-keyword>
+		<href id-name=""></href>
+		<offset></offset>
+	</bad>
+	<add type="">
+		<referrer></referrer>
+		<first-keyword></first-keyword>
+		<second-keyword></second-keyword>
+		<href id-name=""></href>
+		<offset></offset>
+	</add>
+	<rate type="">
+		<referrer></referrer>
+		<first-keyword></first-keyword>
+		<second-keyword></second-keyword>
+		<href id-name=""></href>
+		<offset></offset>
+	</rate>
+</getter>
