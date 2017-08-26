@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<getter>
+	<name type="html-class">
+		<first-keyword>tb-main-title</first-keyword>
+		<second-keyword></second-keyword>
+	</name>
+	<shop type="html-class">
+		<first-keyword>tb-shop-name</first-keyword>
+		<second-keyword></second-keyword>
+	</shop>
+	<price type="js">
+		<referrer>self</referrer>
+		<first-keyword>"price":</first-keyword>
+		<second-keyword>"}}</second-keyword>
+		<href id-name="itemId">https://detailskip.taobao.com/service/getData/1/p1/item/detail/sib.htm?modules=price</href>
+		<offset>9</offset>
+	</price>
+	<count type="js">
+		<referrer>self</referrer>
+		<first-keyword>"soldTotalCount":</first-keyword>
+		<second-keyword>}}}</second-keyword>
+		<href id-name="itemId">https://detailskip.taobao.com/service/getData/1/p1/item/detail/sib.htm?modules=soldQuantity</href>
+		<offset>17</offset>
+	</count>
+	<good type="js">
+		<referrer></referrer>
+		<first-keyword>"good":</first-keyword>
+		<second-keyword>,"pic"</second-keyword>
+		<href id-name="auctionNumId">https://rate.taobao.com/detailCommon.htm</href>
+		<offset>7</offset>
+	</good>
+	<normal type="js">
+		<referrer></referrer>
+		<first-keyword>"normal":</first-keyword>
+		<second-keyword>,"hascontent"</second-keyword>
+		<href id-name="auctionNumId">https://rate.taobao.com/detailCommon.htm</href>
+		<offset>9</offset>
+	</normal>
+	<bad type="js">
+		<referrer></referrer>
+		<first-keyword>"bad":</first-keyword>
+		<second-keyword>,"totalFull"</second-keyword>
+		<href id-name="auctionNumId">https://rate.taobao.com/detailCommon.htm</href>
+		<offset>6</offset>
+	</bad>
+	<add type="js">
+		<referrer></referrer>
+		<first-keyword>"additional":</first-keyword>
+		<second-keyword>,"correspond"</second-keyword>
+		<href id-name="auctionNumId">https://rate.taobao.com/detailCommon.htm</href>
+		<offset>13</offset>
+	</add>
+	<rate type="">
+		<referrer></referrer>
+		<first-keyword></first-keyword>
+		<second-keyword></second-keyword>
+		<href id-name=""></href>
+		<offset></offset>
+	</rate>
+</getter>

@@ -518,7 +518,16 @@ public class CrawlerThread extends Thread{
 			}
 			content.put("rate", 0.0);
 			if(viewport != null) {
-				viewport.updateInfoList(content.get("name").toString());
+				String[] info = {	content.get("name").toString(), 
+									content.get("shop").toString(), 
+									content.get("price").toString(),
+									content.get("count").toString(),
+									content.get("good").toString(),
+									content.get("normal").toString(),
+									content.get("bad").toString(),
+									content.get("add").toString(),
+										};
+				viewport.updateInfoTable(info);
 			}
 			if(CheckIsExist.checkIsExist(content)) {
 				;
