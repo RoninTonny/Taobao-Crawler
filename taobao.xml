@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<page>
+	<first-page>https://www.taobao.com/</first-page>
+	<search-page ignore = "-%E5%A4%A9%E7%8C%AB" type = "ids">
+		<front-url>https://s.taobao.com/search</front-url>
+		<type>
+			<keyword>allNids</keyword>
+			<second-keyword>]</second-keyword>
+			<method>text-array</method>
+		</type>
+		<search-sort>
+			<sort-name>sort</sort-name>
+			<sort>sale-desc</sort>
+		</search-sort>
+		<increate-name>s</increate-name>
+		<page-increate>44</page-increate>
+		<page-start>0</page-start>
+		<search-name>q</search-name>
+		<encode>utf-8</encode>
+		<encode-name></encode-name>
+	</search-page>
+	<info-page>
+		<front-url>https://item.taobao.com/item.htm</front-url>
+		<id-name>id</id-name>
+		<back-url></back-url>
+	</info-page>
+	<page-count>99</page-count>
+</page>
+<!--ignore : "any string" -->
+<!-- type : {"ids", "urls"} -->
+<!-- keyword : the string that can identify ids/urls -->
+<!-- method : {"html-class","html-id","html-name","html-title" "text-array", "text-list"} -->

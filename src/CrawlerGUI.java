@@ -17,8 +17,12 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 public class CrawlerGUI extends JFrame implements ActionListener {
 	
@@ -35,40 +39,65 @@ public class CrawlerGUI extends JFrame implements ActionListener {
 	private JTextField ipTextField;
 	private JLabel threadLabel;
 	private JTextField threadTextField;
+	private JLabel spaceLabel;
 	private JPanel inputPanel;
 	private JLabel statusLabel;
 	private JPanel statusPanel;
 	private DefaultListModel<String> jListModel;
+	private DefaultTableModel jTableModel;
 	private JList<String> infoList;
 	private JScrollPane scrollPanel;
 	private JPanel northPanel;
+	private String infoStr;
+	private JTable jTable;
 	
 	public CrawlerGUI() {
 		// TODO Auto-generated constructor stub
 		super("分布式爬虫-从机");
-		setBounds(500, 500, 480, 320);
+		setBounds(500, 500, 1040, 640);
 		startBtn = new JButton("连接主机");
 		startBtn.setBackground(Color.GREEN);
-		startBtn.addActionListener(this);
-		ipLabel = new JLabel("主机IP：");
+		startBtn.addActionListener(this);    
+		ipLabel = new JLabel("    主机IP：");
 		ipTextField = new JTextField(8);
 		ipTextField.setText("localhost");
-		threadLabel = new JLabel("线程数：");
-		threadTextField = new JTextField(2);
+		threadLabel = new JLabel("    线程数：");
+		threadTextField = new JTextField(4);
+		spaceLabel = new JLabel("  |  ");
+		spaceLabel.setFont(new Font("宋体",Font.PLAIN,40));
 		inputPanel = new JPanel(new FlowLayout());
 		inputPanel.add(startBtn);
 		inputPanel.add(ipLabel);
 		inputPanel.add(ipTextField);
 		inputPanel.add(threadLabel);
 		inputPanel.add(threadTextField);
-		northPanel = new JPanel(new GridLayout(2, 1));
+		inputPanel.add(spaceLabel);
+		northPanel = new JPanel(new GridLayout(1, 1));
 		northPanel.add(inputPanel);
-		statusLabel = new JLabel("连接已断开");
+		infoStr = "链接已断开";
+		statusLabel = new JLabel("                  " + infoStr + "                   ");
+		
+		statusLabel.setFont(new Font("宋体", 1, 20));
+		
 		statusPanel = new JPanel(new FlowLayout());
 		statusPanel.setBackground(Color.RED);
 		statusPanel.add(statusLabel);
-		northPanel.add(statusPanel);
+		inputPanel.add(statusPanel);
 		add(northPanel, BorderLayout.NORTH);
+		String[] tableHead = {"商品名称", "店铺名称", "价格", "销量", "好评", "中评", "差评", "追评",};
+		jTableModel = new DefaultTableModel(null, tableHead) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+		};
+		
+
+		jTable = new JTable(jTableModel);
+		this.setTableSelf(jTable, jTableModel);
+//		jTable.setTableHeader(new JTableHeader(new Ta));
+		
 		jListModel = new DefaultListModel<String>();
 		infoList = new JList<String>(jListModel);
 		infoList.setCellRenderer(new DefaultListCellRenderer() {
@@ -80,12 +109,31 @@ public class CrawlerGUI extends JFrame implements ActionListener {
         });
 		infoList.setFont(new Font("微软雅黑",Font.PLAIN,12));
 		scrollPanel = new JScrollPane();
-		scrollPanel.setViewportView(infoList);
+		scrollPanel.setViewportView(jTable);
 		add(scrollPanel, BorderLayout.CENTER);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 		setVisible(true);
 	}
+
+	private void setTableSelf(JTable jTable2, DefaultTableModel jTableModel2) {
+		// TODO Auto-generated method stub
+		jTable2.setRowHeight(25);
+		jTable2.getColumnModel().getColumn(0).setPreferredWidth(400);
+		jTable2.getColumnModel().getColumn(1).setPreferredWidth(150);
+		jTable2.getColumnModel().getColumn(2).setPreferredWidth(75);
+		jTable2.getColumnModel().getColumn(3).setPreferredWidth(75);
+		jTable2.getColumnModel().getColumn(4).setPreferredWidth(75);
+		jTable2.getColumnModel().getColumn(5).setPreferredWidth(75);
+		jTable2.getColumnModel().getColumn(6).setPreferredWidth(75);
+		jTable2.getColumnModel().getColumn(7).setPreferredWidth(75);
+		DefaultTableCellRenderer tcf = new DefaultTableCellRenderer();
+		tcf.setHorizontalAlignment(JLabel.CENTER);//居中显示  
+		for (int i = 2; i < 8; i++ )
+		jTable2.setDefaultRenderer(jTable2.getColumnClass(i), tcf);
+		
+	}
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -126,37 +174,52 @@ public class CrawlerGUI extends JFrame implements ActionListener {
 	
 	public void updateInfoList(String info) {
 		jListModel.addElement(info);
-		scrollPanel.getVerticalScrollBar().setValue(scrollPanel.getVerticalScrollBar().getMaximum());
+		//scrollPanel.getVerticalScrollBar().setValue(scrollPanel.getVerticalScrollBar().getMaximum());
+		jTable.setAutoscrolls(true);
+	}
+	
+	public void updateInfoTable(String[] info) {
+		jTableModel.addRow(info);
+		int x = scrollPanel.getVerticalScrollBar().getMaximum();
+		
+		scrollPanel.getVerticalScrollBar().setValue((x>2)?x-2:x);
 	}
 	
 	public synchronized void updateStatus(int SLAVE_STATUS) {
 		if(SLAVE_STATUS == SLAVE_DISCONNECT) {
 			statusPanel.setBackground(Color.RED);
-			statusLabel.setText("连接已断开");
+			infoStr = "链接已断开";
+			statusLabel.setText("                  " + infoStr + "                   ");
 		}
 		if(SLAVE_STATUS == SLAVE_CONNECTING) {
+			infoStr = " 正在链接 ";
 			statusPanel.setBackground(Color.ORANGE);
-			statusLabel.setText("正在连接……");
+			statusLabel.setText("                  " + infoStr + "                   ");
 		}
 		if(SLAVE_STATUS == SLAVE_CONNECTED) {
+			infoStr = " 已连接  ";
 			statusPanel.setBackground(Color.GREEN);
-			statusLabel.setText("已连接");
+			statusLabel.setText("                  " + infoStr + "                   ");
 		}
 		if(SLAVE_STATUS == SLAVE_RECIEVEING) {
+			infoStr = " 正在接收 ";
 			statusPanel.setBackground(Color.ORANGE);
-			statusLabel.setText("正在接收……");
+			statusLabel.setText("                  " + infoStr + "                   ");
 		}
 		if(SLAVE_STATUS == SLAVE_REQUESTING) {
+			infoStr = " 正在请求 ";
 			statusPanel.setBackground(Color.ORANGE);
-			statusLabel.setText("正在请求……");
+			statusLabel.setText("                  " + infoStr + "                   ");
 		}
 		if(SLAVE_STATUS == SLAVE_CRAWLING) {
+			infoStr = " 正在抓取 ";
 			statusPanel.setBackground(Color.GREEN);
-			statusLabel.setText("正在抓取……");
+			statusLabel.setText("                  " + infoStr + "                   ");
 		}
 		if(SLAVE_STATUS == SLAVE_WAITING) {
+			infoStr = " 正在等待 ";
 			statusPanel.setBackground(Color.ORANGE);
-			statusLabel.setText("等待任务……");
+			statusLabel.setText("                  " + infoStr + "                   ");
 		}
 	}
 
