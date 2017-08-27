@@ -92,6 +92,7 @@ public abstract class UrlCrawlerThread extends Thread {
 	
 	//local usage , just ignore this
 	private String getUrl() {
+		serverGUI.updateLog("Download ID : " + this.searchUrl + " -Count:" + this.nextPage.get() * this.rule.SEARCH_PAGE_INCREATE);
 		System.out.println(this.searchUrl + (this.rule.SEARCH_PAGE_INCREATE_START + this.nextPage.get() * this.rule.SEARCH_PAGE_INCREATE));
 		return this.searchUrl + (this.rule.SEARCH_PAGE_INCREATE_START + this.nextPage.get() * this.rule.SEARCH_PAGE_INCREATE);
 	}

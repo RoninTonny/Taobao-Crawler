@@ -27,13 +27,13 @@ public class UrlReceive extends Thread implements Serializable {
 	private static final int CLIENT_RESULT = 3;
 	private static final int CLIENT_HBP = 4;
 
-	public UrlReceive() {
+	public UrlReceive(String ip) {
 		threadCount = 0;
 		urls = new ArrayList<String>();
 		jedis = new Jedis("localhost");
 		crawlerThreads = new ArrayList<CrawlerThread>();
 		try {
-			server = new Socket("127.0.0.1", 10240);
+			server = new Socket(ip, 10240);
 			urlsFromServer = new ObjectInputStream(server.getInputStream());
 			msgToServer = new DataOutputStream(server.getOutputStream());
 			HBP = new SlaveHBPThread(server);
@@ -73,7 +73,7 @@ public class UrlReceive extends Thread implements Serializable {
 		threadCount = crawlerGUI.getThreadCount();
 		for(int i = 0; i < threadCount; ++i) {
 			System.out.println(threadCount);
-			crawlerThreads.add(new CrawlerThread("taobao.xml", "tbgetter.xml"));
+			crawlerThreads.add(new CrawlerThread("crawler-url.xml", "crawler-content.xml"));
 			crawlerThreads.get(i).setViewport(crawlerGUI);
 			crawlerThreads.get(i).start();
 		}
@@ -144,7 +144,7 @@ public class UrlReceive extends Thread implements Serializable {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new UrlReceive();
+		new UrlReceive("localhost");
 	}
 
 }

@@ -38,16 +38,16 @@ public class UrlCrawlerThreadTest {
 	public UrlCrawlerThreadTest() {
 		// TODO Auto-generated constructor stub
 		max = new AtomicInteger(1);
-		dmax = (new CrawlerRule("taobao.xml")).PAGE_COUNT;
-		crawler = new Crawler(new CrawlerRule("taobao.xml"), "%E7%94%B5%E8%84%91", 0);
+		dmax = (new CrawlerRule("crawler-url.xml")).PAGE_COUNT;
+		crawler = new Crawler(new CrawlerRule("crawler-url.xml"), "%E7%94%B5%E8%84%91", 0);
 	}
 	
 	public UrlCrawlerThreadTest(String keyword) {
 		// TODO Auto-generated constructor stub
 		max = new AtomicInteger(1);
-		dmax = (new CrawlerRule("taobao.xml")).PAGE_COUNT;
+		dmax = (new CrawlerRule("crawler-url.xml")).PAGE_COUNT;
 		try {
-			crawler = new Crawler(new CrawlerRule("taobao.xml"), URLEncoder.encode(keyword, "UTF-8"), 0);
+			crawler = new Crawler(new CrawlerRule("crawler-url.xml"), URLEncoder.encode(keyword, "UTF-8"), 0);
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

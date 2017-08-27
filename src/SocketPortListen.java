@@ -6,6 +6,7 @@ public class SocketPortListen extends Thread{
 	
 	private ServerGUI serverGUI;
 	private int startPort;
+	private int size;
 	
 	public void setViewPort(ServerGUI serverGUI) {
 		this.serverGUI = serverGUI;
@@ -17,7 +18,12 @@ public class SocketPortListen extends Thread{
 	
 	public SocketPortListen(int startPort) {
 		this.startPort = startPort;
+		this.size = 300;
 		start();
+	}
+	
+	public void setPacketSize(int size) {
+		this.size = size;
 	}
 	
 	@Override
@@ -30,6 +36,7 @@ public class SocketPortListen extends Thread{
 				System.out.println("Slave Online : " + client.getInetAddress());
 				UrlSendThread urlSendThread = new UrlSendThread(client);
 				urlSendThread.setViewport(serverGUI);
+				urlSendThread.setUrlPacketSize(size);
 				urlSendThread.start();
 				//do stuff
 			}

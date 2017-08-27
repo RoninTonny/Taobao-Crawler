@@ -39,7 +39,7 @@ public class UrlSendThread extends Thread implements Serializable{
 	
 	public UrlSendThread(Socket client) {
 		this.maxRetry = 3;
-		this.urlPacketSize = 30;
+		this.urlPacketSize = 300;
 		this.done = false;
 		this.IDS = new ArrayList<String>();
 		this.jedis = new Jedis("localhost");
@@ -78,7 +78,7 @@ public class UrlSendThread extends Thread implements Serializable{
 			serverGUI.updateSlaveNum(1);
 		}
 		boolean isFirst = true;
-		System.out.println(this.getName() + " Server send thread start");
+		serverGUI.updateLog(this.getName() + " Server send thread start");
 		int connectFailCount = 0;
 		int msg = -1;
 		int sentCount = 0;
@@ -96,7 +96,7 @@ public class UrlSendThread extends Thread implements Serializable{
 				}
 				if(msg == this.CLIENT_READY) {
 					msg = -1;
-					System.out.println(this.getName() + " Slave ready in : " + slaveIP);
+					serverGUI.updateLog(this.getName() + " Slave ready in : " + slaveIP);
 					for(int i = 0; i < urlPacketSize && jedis.llen("IDS") != 0; ++i) {
 						++sentCount;
 						IDS.add(jedis.rpop("IDS"));
@@ -121,37 +121,37 @@ public class UrlSendThread extends Thread implements Serializable{
 				}
 				if(msg == this.CLIENT_ACCEPTED) {
 					msg = -1;
-					System.out.println(this.getName() + " Send Url Packet with " + IDS.size());
+					serverGUI.updateLog(this.getName() + " Send Url Packet with " + IDS.size());
 					if(serverGUI != null) {
 						serverGUI.updateOutProgress(sentCount, jedis.llen("IDS"));
 					}
 					int HBPFailCount = 0;
 					while(true) {
 						try {
-							//System.out.println(this.getName() + " Waiting HBP");
+							//serverGUI.updateLog(this.getName() + " Waiting HBP");
 							msg = msgAccepted.readInt();
 							if(msg == this.CLIENT_HBP) {
 								msg = -1;
-								//System.out.println(this.getName() + " Recieve HBP");
+								//serverGUI.updateLog(this.getName() + " Recieve HBP");
 								HBPFailCount = 0;
 								continue;
 							}
 							if(msg == this.CLIENT_RESULT){
 								msg = -1;
-								System.out.println(this.getName() + " Slave finished work");
+								serverGUI.updateLog(this.getName() + " Slave finished work");
 								//do sth
 								IDS.clear();
 								msg = this.CLIENT_READY;
 								break;
 							}
 						} catch (SocketTimeoutException e) {
-							System.out.println(this.getName() + " Get HBP fail");
+							serverGUI.updateLog(this.getName() + " Get HBP fail");
 							++HBPFailCount;
 							if(HBPFailCount > maxRetry) {
 								if(serverGUI != null) {
 									serverGUI.updateSlaveNum(-1);
 								}
-								System.out.println(this.getName() + " Slave offline, Server will be shutdown right now");
+								serverGUI.updateLog(this.getName() + " Slave offline, Server will be shutdown right now");
 								//return;
 							}
 							continue;
@@ -159,13 +159,13 @@ public class UrlSendThread extends Thread implements Serializable{
 							if(serverGUI != null) {
 								serverGUI.updateSlaveNum(-1);
 							}
-							System.out.println(this.getName() + " Slave offline, Server will be shutdown right now");
+							serverGUI.updateLog(this.getName() + " Slave offline, Server will be shutdown right now");
 							return;
 						}
 					}
 				}
 			} catch (SocketTimeoutException e) {
-				System.out.println(this.getName() + " Connect fail");
+				serverGUI.updateLog(this.getName() + " Connect fail");
 				++connectFailCount;
 				if(connectFailCount > maxRetry) {
 					if(done) {
@@ -178,14 +178,14 @@ public class UrlSendThread extends Thread implements Serializable{
 					if(serverGUI != null) {
 						serverGUI.updateSlaveNum(-1);
 					}
-					System.out.println(this.getName() + " Slave offline, Server will be shutdown right now");
+					serverGUI.updateLog(this.getName() + " Slave offline, Server will be shutdown right now");
 					return;
 				}
 			} catch (SocketException e) {
 				if(serverGUI != null) {
 					serverGUI.updateSlaveNum(-1);
 				}
-				System.out.println(this.getName() + " Slave offline, Server will be shutdown right now");
+				serverGUI.updateLog(this.getName() + " Slave offline, Server will be shutdown right now");
 				return;
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
