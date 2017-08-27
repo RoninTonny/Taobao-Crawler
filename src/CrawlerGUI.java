@@ -28,6 +28,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import sun.awt.resources.awt;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 public class CrawlerGUI extends JFrame implements ActionListener {
 	
@@ -70,7 +73,15 @@ public class CrawlerGUI extends JFrame implements ActionListener {
 		ipLabel = new JLabel("  主机IP：");
 		ipTextField = new JTextField(12);
 		ipTextField.setText("localhost");
-		threadLabel = new JLabel("  线程数：");
+		threadLabel = new JLabel("  线程数：")
+		setBounds(500, 500, 1040, 640);
+		startBtn = new JButton("连接主机");
+		startBtn.setBackground(Color.GREEN);
+		startBtn.addActionListener(this);    
+		ipLabel = new JLabel("    主机IP：");
+		ipTextField = new JTextField(8);
+		ipTextField.setText("localhost");
+		threadLabel = new JLabel("    线程数：")
 		threadTextField = new JTextField(4);
 		spaceLabel = new JLabel("  |  ");
 		spaceLabel.setFont(new Font("宋体",Font.PLAIN,40));
@@ -156,6 +167,7 @@ public class CrawlerGUI extends JFrame implements ActionListener {
 				UIManager.put(key, fontUIResource);
 			}
 		}
+	}
 	}
 	
 	@Override
@@ -264,6 +276,53 @@ public class CrawlerGUI extends JFrame implements ActionListener {
 				statusPanel.setBackground(Color.ORANGE);
 				statusLabel.setText("                  " + infoStr + "                   ");
 			}
+		jListModel.addElement(info);
+		//scrollPanel.getVerticalScrollBar().setValue(scrollPanel.getVerticalScrollBar().getMaximum());
+		jTable.setAutoscrolls(true);
+	}
+	
+	public void updateInfoTable(String[] info) {
+		jTableModel.addRow(info);
+		int x = scrollPanel.getVerticalScrollBar().getMaximum();
+		
+		scrollPanel.getVerticalScrollBar().setValue((x>2)?x-2:x);
+	}
+	
+	public synchronized void updateStatus(int SLAVE_STATUS) {
+		if(SLAVE_STATUS == SLAVE_DISCONNECT) {
+			statusPanel.setBackground(Color.RED);
+			infoStr = "链接已断开";
+			statusLabel.setText("                  " + infoStr + "                   ");
+		}
+		if(SLAVE_STATUS == SLAVE_CONNECTING) {
+			infoStr = " 正在链接 ";
+			statusPanel.setBackground(Color.ORANGE);
+			statusLabel.setText("                  " + infoStr + "                   ");
+		}
+		if(SLAVE_STATUS == SLAVE_CONNECTED) {
+			infoStr = " 已连接  ";
+			statusPanel.setBackground(Color.GREEN);
+			statusLabel.setText("                  " + infoStr + "                   ");
+		}
+		if(SLAVE_STATUS == SLAVE_RECIEVEING) {
+			infoStr = " 正在接收 ";
+			statusPanel.setBackground(Color.ORANGE);
+			statusLabel.setText("                  " + infoStr + "                   ");
+		}
+		if(SLAVE_STATUS == SLAVE_REQUESTING) {
+			infoStr = " 正在请求 ";
+			statusPanel.setBackground(Color.ORANGE);
+			statusLabel.setText("                  " + infoStr + "                   ");
+		}
+		if(SLAVE_STATUS == SLAVE_CRAWLING) {
+			infoStr = " 正在抓取 ";
+			statusPanel.setBackground(Color.GREEN);
+			statusLabel.setText("                  " + infoStr + "                   ");
+		}
+		if(SLAVE_STATUS == SLAVE_WAITING) {
+			infoStr = " 正在等待 ";
+			statusPanel.setBackground(Color.ORANGE);
+			statusLabel.setText("                  " + infoStr + "                   ");
 		}
 	}
 
